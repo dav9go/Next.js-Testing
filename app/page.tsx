@@ -1,14 +1,17 @@
 //Components
-import Counter from "./counter";
+import PageHeading from "@/components/PageHeading";
 
 export const metadata = {
-  title: "App Router",
+  title: "Testing",
 };
 
 export default function Page() {
   return (
-    <main>
-      <h1>Principal testing page</h1>
-    </main>
+    <>
+      <PageHeading
+        mainHeading="Principal testing page"
+        paragraph="Principal test page for next.js"
+      />
+    </>
   );
 }
