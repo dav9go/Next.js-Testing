@@ -1,7 +1,8 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import { logRoles } from "@testing-library/react";
 //Components
 import Page from "./page";
 import ListItems from "@/components/ListItems";
@@ -40,7 +41,8 @@ describe("List of inputs to fill", () => {
   const items = ["Name", "Surname", "Pack"];
 
   test("List exist in the page", () => {
-    render(<ListItems items={items} />);
+    const view = render(<ListItems items={items} />);
+    logRoles(view.container);
 
     const listItems = screen.getByRole("list");
     expect(listItems).toBeInTheDocument();
@@ -81,5 +83,33 @@ describe("Form Elements", () => {
 
     const submitButton = screen.getByTestId("submit-button");
     expect(submitButton).toBeInTheDocument();
+  });
+
+  test("Not sent button", () => {
+    render(<Page />);
+
+    const sentButton = screen.queryByRole("button", {
+      name: "Sent",
+    });
+    expect(sentButton).not.toBeInTheDocument();
+  });
+
+  test("Not submit faster at the beggining", () => {
+    render(<Page />);
+
+    const submitFasterMsg = screen.queryByText("Submit faster!!!");
+    expect(submitFasterMsg).not.toBeInTheDocument();
+  });
+
+  test("Submit faster in the document after 1500ms", async () => {
+    render(<Page />);
+
+    await waitFor(
+      () => {
+        const submitFasterMsg = screen.getByText("Submit faster!!!");
+        expect(submitFasterMsg).toBeInTheDocument();
+      },
+      { timeout: 2000 }
+    );
   });
 });

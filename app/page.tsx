@@ -1,12 +1,24 @@
+"use client";
+
 //Components
 import PageHeading from "@/components/PageHeading";
 import ListItems from "@/components/ListItems";
-
-export const metadata = {
-  title: "Testing",
-};
+import Counter from "./counter";
+//Hooks
+import { useState, useEffect } from "react";
 
 export default function Page() {
+  const [sent, setSent] = useState<boolean>(false);
+  const [showFastMsg, setShowFastMsg] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fastMsgTimeout = setTimeout(() => {
+      setShowFastMsg(true);
+    }, 1500);
+
+    return () => clearTimeout(fastMsgTimeout);
+  }, []);
+
   return (
     <>
       <PageHeading
@@ -32,11 +44,19 @@ export default function Page() {
           <input id="surname" type="text" placeholder="Surname" />
         </div>
         <div>
-          <label htmlFor="packy">Pack</label>
-          <input id="packy" type="text" defaultValue="Premium" />
+          <label htmlFor="pack">Pack</label>
+          <input id="pack" type="text" defaultValue="Premium" />
         </div>
-        <button data-testid="submit-button">Submit</button>
+        {sent ? (
+          <button disabled>Sent</button>
+        ) : (
+          <button data-testid="submit-button" onClick={() => setSent(true)}>
+            Submit
+          </button>
+        )}
+        {showFastMsg && <p>Submit faster!!!</p>}
       </form>
+      <Counter />
     </>
   );
 }
