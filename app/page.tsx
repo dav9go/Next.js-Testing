@@ -4,6 +4,7 @@
 import PageHeading from "@/components/PageHeading";
 import ListItems from "@/components/ListItems";
 import Counter from "./counter";
+import MockCounter from "@/components/mockFunctions/MockCounter";
 //Hooks
 import { useState, useEffect } from "react";
 
@@ -57,6 +58,7 @@ export default function Page() {
         {showFastMsg && <p>Submit faster!!!</p>}
       </form>
       <Counter />
+      <MockCounter />
     </>
   );
 }

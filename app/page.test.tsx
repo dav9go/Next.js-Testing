@@ -41,8 +41,7 @@ describe("List of inputs to fill", () => {
   const items = ["Name", "Surname", "Pack"];
 
   test("List exist in the page", () => {
-    const view = render(<ListItems items={items} />);
-    logRoles(view.container);
+    render(<ListItems items={items} />);
 
     const listItems = screen.getByRole("list");
     expect(listItems).toBeInTheDocument();
